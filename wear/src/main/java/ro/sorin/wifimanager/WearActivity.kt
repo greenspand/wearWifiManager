@@ -51,7 +51,6 @@ class WearActivity : BaseWearActivity() {
             rxBus.send(WearMessage(WEAR_MSG, START_WIFI_SCAN))
         }
     }
-
     fun ToggleButton.turnWifiOnOff() {
         this.setOnCheckedChangeListener { compoundButton, b ->
             if (b) rxBus.send(WearMessage(WEAR_MSG, WIFI_ON)) else rxBus.send(WearMessage(WEAR_MSG, WIFI_OFF))
