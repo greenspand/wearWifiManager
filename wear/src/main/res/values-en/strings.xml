@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WifiManager</string>
+    <string name="hello_round">Hello Round World!</string>
+    <string name="hello_square">Hello Square World!</string>
+    <string name="create_wifi_ap">Create WIFI Hot-Spot</string>
+    <string name="connect_phone_to_wifi">Connect Phone To WIFI</string>
+    <string name="wifi_enable">Enabling wifi</string>
+
+</resources>
