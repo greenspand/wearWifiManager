@@ -1,0 +1,13 @@
+syntax = "proto2";
+
+package ro.sorin.wifimanager.protobuf;
+
+option java_package = "ro.sorin.wifimanager";
+
+import "networks/wifi.proto";
+
+message WifiHost {
+  optional string ssid = 1;
+  optional int32 lvl = 2;
+  optional bool untrusted = 3;
+}

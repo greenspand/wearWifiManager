@@ -1,0 +1,100 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'realm-android'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.vanniktech.android.apk.size'
+
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "ro.sorin.wifimanager"
+        minSdkVersion 21
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //reduce apk coverage to only selected architectures
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+            universalApk true
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    lintOptions {
+        abortOnError false // ignoring some references from dagger-compiler
+    }
+    dexOptions {
+        javaMaxHeapSize "2048M"
+    }
+}
+kapt {
+    generateStubs = true
+}
+final PLAY_SERVICES_V = '9.0.2'
+final SUPPORT_LIB_V = '23.4.0'
+final ANKO_V = '0.8.3'
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "com.android.support:design:${SUPPORT_LIB_V}"
+    compile 'com.google.android.support:wearable:1.3.0'
+    compile "com.google.android.gms:play-services-nearby:${PLAY_SERVICES_V}"
+    compile "com.google.android.gms:play-services-wearable:${PLAY_SERVICES_V}"
+    compile project(':utils')
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.anko:anko-sdk15:$ANKO_V"
+    // sdk19, sdk21, sdk23 are also available
+    compile "org.jetbrains.anko:anko-support-v4:$ANKO_V"
+    // In case you need support-v4 bindings
+    compile "org.jetbrains.anko:anko-appcompat-v7:$ANKO_V"
+    // For appcompat-v7 bindings
+    compile "org.jetbrains.anko:anko-recyclerview-v7:$ANKO_V"
+    compile "org.jetbrains.anko:anko-cardview-v7:$ANKO_V"
+    //Dagger 2 dependencies
+    compile 'com.google.dagger:dagger:2.4'
+    kapt 'com.google.dagger:dagger-compiler:2.4'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile project(':wifiApManager')
+    //Rx dependencies
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxkotlin:0.55.0'
+    //Test dependencies
+    androidTestCompile 'commons-io:commons-io:2.4'
+    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    //    Dependency injection similar to Dagger2
+    //    compile 'com.github.stephanenicolas.toothpick:toothpick-runtime:+'
+    //or 'com.github.stephanenicolas.toothpick:smoothie:x.y.z'
+    //    apt 'com.github.stephanenicolas.toothpick:toothpick-compiler:+'
+}
+buildscript {
+    ext.kotlin_version = '1.0.2'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
+}
