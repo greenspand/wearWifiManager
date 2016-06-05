@@ -24,10 +24,7 @@ class WearActivity : BaseWearActivity() {
         return R.string.app_name
     }
 
-    lateinit var togWifiOnOff: ToggleButton
-    lateinit var togWifiAP: ToggleButton
     lateinit var wifiAdapter: WifiAdapter
-
 
     companion object {
         private val TAG = WearActivity::class.java.simpleName
@@ -43,27 +40,9 @@ class WearActivity : BaseWearActivity() {
             }
         });
         tog_wifi_state.turnWifiOnOff()
-        tog_wifi_ap_state.startStopWIFIAp()
+        tog_wifi_ap_state.startStopWifiAp()
         fab_get_wifi_networks.scanForWifiNetworks()
         rv_wifi_list.adapter = wifiAdapter
-
-        //TODO chekc if the anko layout style ist still relevant
-//        relativeLayout {
-//            padding = dip(30)
-//            togWifiOnOff= toggleButton {
-//                turnWifiOnOff()
-//                text = getText(R.string.wifi_enable)
-//                textSize = 12f
-//            }
-//            togWifiAP= toggleButton {
-//                startStopWIFIAp()
-//                text = getText(R.string.create_wifi_ap)
-//                textSize = 12f
-//            }
-//            recyclerView{
-//               adapter = wifiAdapter
-//            }
-//        }
         startService(Intent(this, WearEventService::class.java))
     }
 
@@ -79,7 +58,7 @@ class WearActivity : BaseWearActivity() {
         }
     }
 
-    fun ToggleButton.startStopWIFIAp() {
+    fun ToggleButton.startStopWifiAp() {
         this.setOnCheckedChangeListener { compoundButton, b ->
             if (b) rxBus.send(WearMessage(WEAR_MSG, WIFI_AP_ON)) else rxBus.send(WearMessage(WEAR_MSG, WIFI_AP_OFF))
         }

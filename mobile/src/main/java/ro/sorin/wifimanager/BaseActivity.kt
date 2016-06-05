@@ -39,7 +39,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MobileApplication.graph.inject(this);
-//        requestWriteSettingsPermission()
+        requestWriteSettingsPermission()
         requestWifiScanPermissions()
     }
 

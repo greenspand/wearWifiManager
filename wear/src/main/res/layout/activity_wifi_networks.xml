@@ -22,10 +22,14 @@
         <ToggleButton
             android:id="@+id/tog_wifi_state"
             android:layout_width="wrap_content"
+            android:textOn="Wif Off"
+            android:textOff="Wifi On"
             android:layout_height="wrap_content" />
 
         <ToggleButton
             android:id="@+id/tog_wifi_ap_state"
+            android:textOn="Create AP"
+            android:textOff="Stop AP"
             android:layout_width="wrap_content"
             android:layout_gravity="center|start"
             android:layout_height="wrap_content" />
@@ -33,6 +37,7 @@
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_get_wifi_networks"
             android:layout_width="wrap_content"
+            android:src="@android:drawable/ic_menu_search"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="5dp"
