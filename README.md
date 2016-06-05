@@ -1,2 +1,2 @@
 # wearWifiManager
-Small app to connect and to and create WIFI networks.
+Small app to connect from your wrist to WIFI networks and to create a WIFI AP on your phone.
