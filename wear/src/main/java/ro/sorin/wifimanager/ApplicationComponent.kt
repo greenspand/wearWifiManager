@@ -1,5 +1,6 @@
 package ro.sorin.wifimanager
 
+import android.support.v4.app.Fragment
 import dagger.Component
 import ro.sorin.wifimanager.BaseWearActivity
 import ro.sorin.wifimanager.WearApplication
@@ -16,5 +17,6 @@ interface ApplicationComponent {
     fun inject(application: WearApplication)
     fun inject(activity: BaseWearActivity)
     fun inject(service: WearEventService)
+    fun inject(fragment: Fragment)
 
 }

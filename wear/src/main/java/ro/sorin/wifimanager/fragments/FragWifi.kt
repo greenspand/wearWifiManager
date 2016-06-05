@@ -7,18 +7,23 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ro.sorin.utils.RxBusSingleton
+import ro.sorin.utils.RxBus
 import ro.sorin.wifimanager.OnWifiListClickListener
 import ro.sorin.wifimanager.R
+import ro.sorin.wifimanager.WearApplication
 import ro.sorin.wifimanager.adapter.WifiAPAdapter
 import ro.sorin.wifimanager.adapter.WifiAdapter
 import rx.subscriptions.CompositeSubscription
+import javax.inject.Inject
 
 /**
  * Created by sorin on 16.12.15.
  */
 class FragWifi : Fragment() {
 
+
+    @Inject
+    lateinit var rxBus : RxBus
 
     companion object {
         fun newInstance(): FragWifi {
@@ -33,8 +38,9 @@ class FragWifi : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WearApplication.graph.inject(this)
         busSub = CompositeSubscription()
-        busSub?.add(RxBusSingleton.toObservable().subscribe({ o ->
+        busSub?.add(rxBus.toObservable().subscribe({ o ->
             if (o is ScanResult) {
                 adapter?.addItem((adapter as WifiAdapter).items.size, o)
             }

@@ -11,7 +11,6 @@ import android.content.Intent
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.util.Log
-import ro.sorin.utils.RxBusSingleton
 
 import rx.Observable
 import rx.functions.Action1
