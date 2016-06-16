@@ -1,20 +1,17 @@
 package ro.sorin.wifimanager.adapter
 
-import android.net.wifi.ScanResult
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-
-import java.util.ArrayList
-
+import ro.sorin.utils.entities.WifiDetails
 import ro.sorin.wifimanager.OnWifiListClickListener
 import ro.sorin.wifimanager.R
 import ro.sorin.wifimanager.viewholder.WifisViewHolder
+import java.util.*
 
 class WifiAdapter(private val onWifiListClickListener: OnWifiListClickListener) : RecyclerView.Adapter<WifisViewHolder>() {
 
-    val items = ArrayList<ScanResult>()
+    val items = ArrayList<WifiDetails>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WifisViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_wifi, parent, false)
@@ -23,25 +20,25 @@ class WifiAdapter(private val onWifiListClickListener: OnWifiListClickListener) 
 
     //
     override fun onBindViewHolder(holder: WifisViewHolder, position: Int) {
-//        holder.tvSSID.text = items[position].SSID
-//        holder.tvStrength.text = "" + items[position].frequency
-//        holder.rootWifi.setOnClickListener { onWifiListClickListener.onItemClicked(holder, items[holder.adapterPosition], position) }
+        holder.sssidView.text = items[position].ssid
+        holder.capabilitiesView.text = "" + items[position].capabilities
+        holder.rootWifiRow.setOnClickListener { onWifiListClickListener.onItemClicked(holder, items[holder.adapterPosition], position) }
     }
 
-    fun addItem(position: Int, item: ScanResult) {
+    fun addItem(position: Int, item: WifiDetails) {
         items.add(position, item)
         notifyItemInserted(position)
 
     }
 
-    fun addItems(items: ArrayList<ScanResult>) {
+    fun addItems(items: ArrayList<WifiDetails>) {
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
 
     }
 
-    fun removeItem(item: ScanResult) {
+    fun removeItem(item: WifiDetails) {
         val position = items.indexOf(item)
         items.removeAt(position)
         notifyItemRemoved(position)
@@ -52,7 +49,7 @@ class WifiAdapter(private val onWifiListClickListener: OnWifiListClickListener) 
         return items.size
     }
 
-    fun getItemAtPos(pos: Int): ScanResult {
+    fun getItemAtPos(pos: Int): WifiDetails {
         return items[pos]
     }
 

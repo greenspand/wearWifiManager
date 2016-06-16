@@ -9,9 +9,12 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import ro.sorin.utils.WEAR_MSG
 import ro.sorin.utils.entities.WearMessage
+import ro.sorin.utils.entities.WifiDetails
+import ro.sorin.utils.extensionfunctions.d
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
+import java.util.*
 
 class MainActivity : BaseActivity() {
     override fun getRootLayout(): View {
@@ -23,7 +26,7 @@ class MainActivity : BaseActivity() {
     }
 
 
-    lateinit  var subscriptions: CompositeSubscription
+    lateinit var subscriptions: CompositeSubscription
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.activity_main)
         super.onCreate(savedInstanceState)
@@ -34,12 +37,13 @@ class MainActivity : BaseActivity() {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { o ->
-                    when (o is ScanResult) {
-
+                    if(o is  List<*>){
+                        d("Wifi Size is: ${o.size}")
+                    }else if(o is WearMessage){
+                        d("Wear msg: ${o.path}")
                     }
                 })
-
-        fab.setOnClickListener { rxBus.send(WearMessage(WEAR_MSG, "Hellow from Mobile"))}
+        fab.setOnClickListener { rxBus.send(WearMessage(WEAR_MSG, "Hellow from Mobile")) }
     }
 
 
