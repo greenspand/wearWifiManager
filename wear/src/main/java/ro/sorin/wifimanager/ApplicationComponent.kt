@@ -18,5 +18,4 @@ interface ApplicationComponent {
     fun inject(activity: BaseWearActivity)
     fun inject(service: WearEventService)
     fun inject(fragment: Fragment)
-
 }

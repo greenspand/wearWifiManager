@@ -2,21 +2,20 @@ package ro.sorin.wifimanager
 
 
 import android.content.Intent
-import android.net.wifi.ScanResult
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.RecyclerView
 import android.widget.ToggleButton
 import kotlinx.android.synthetic.main.activity_wifi_networks.*
-import org.jetbrains.anko.*
-import org.jetbrains.anko.recyclerview.v7.recyclerView
 import ro.sorin.utils.*
 import ro.sorin.utils.entities.WearMessage
+import ro.sorin.utils.entities.WifiDetails
+import ro.sorin.utils.extensionfunctions.d
 import ro.sorin.utils.extensionfunctions.toast
 import ro.sorin.wifimanager.adapter.WifiAdapter
 import rx.functions.Action1
 import rx.subscriptions.CompositeSubscription
-import javax.inject.Inject
+import java.util.*
 
 class WearActivity : BaseWearActivity() {
 
@@ -30,13 +29,15 @@ class WearActivity : BaseWearActivity() {
         private val TAG = WearActivity::class.java.simpleName
     }
 
+
+
     private lateinit var busSubscription: CompositeSubscription
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wifi_networks)
         wifiAdapter = WifiAdapter(object : OnWifiListClickListener {
-            override fun onItemClicked(holder: RecyclerView.ViewHolder, item: ScanResult, pos: Int) {
+            override fun onItemClicked(holder: RecyclerView.ViewHolder, item: WifiDetails, pos: Int) {
             }
         });
         tog_wifi_state.turnWifiOnOff()
@@ -51,6 +52,7 @@ class WearActivity : BaseWearActivity() {
             rxBus.send(WearMessage(WEAR_MSG, START_WIFI_SCAN))
         }
     }
+
     fun ToggleButton.turnWifiOnOff() {
         this.setOnCheckedChangeListener { compoundButton, b ->
             if (b) rxBus.send(WearMessage(WEAR_MSG, WIFI_ON)) else rxBus.send(WearMessage(WEAR_MSG, WIFI_OFF))
@@ -81,6 +83,9 @@ class WearActivity : BaseWearActivity() {
                 val msg = event.payLoad
                 val path = event.path
                 toast(path + msg)
+            } else if (event is List<*>) {
+                d("Wifi Size is: ${event.size}")
+                wifiAdapter.addItems(event as ArrayList<WifiDetails>)
             }
         }
 
