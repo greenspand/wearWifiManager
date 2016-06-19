@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ro.sorin.utils.RxBus
+import ro.sorin.utils.entities.WifiDetails
 import ro.sorin.wifimanager.OnWifiListClickListener
 import ro.sorin.wifimanager.R
 import ro.sorin.wifimanager.WearApplication
@@ -41,7 +42,7 @@ class FragWifi : Fragment() {
         WearApplication.graph.inject(this)
         busSub = CompositeSubscription()
         busSub?.add(rxBus.toObservable().subscribe({ o ->
-            if (o is ScanResult) {
+            if (o is WifiDetails) {
                 adapter?.addItem((adapter as WifiAdapter).items.size, o)
             }
         }))
@@ -59,9 +60,10 @@ class FragWifi : Fragment() {
     }
 
     internal var onWifiListClickListener: OnWifiListClickListener = object : OnWifiListClickListener {
-        override fun onItemClicked(holder: RecyclerView.ViewHolder, item: ScanResult, pos: Int) {
-
+        override fun onItemClicked(holder: RecyclerView.ViewHolder, item: WifiDetails, pos: Int) {
+            throw UnsupportedOperationException()
         }
+
     }
 
     override fun onDestroyView() {
