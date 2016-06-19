@@ -3,6 +3,8 @@ package ro.sorin.utils.extensionfunctions
 import android.app.AlertDialog
 import android.app.Notification
 import android.content.Context
+import android.support.design.widget.Snackbar
+import android.view.View
 import android.widget.Toast
 
 /***
@@ -24,4 +26,9 @@ inline fun notification(context: Context, func : Notification.Builder.() -> Unit
     val builder = Notification.Builder(context)
     builder.func()
     return builder.build()
+}
+
+ fun snack(container: View, msg : String, duration: Int = Snackbar.LENGTH_SHORT): Snackbar{
+    val snackbar = Snackbar.make(container, msg, duration)
+    return snackbar
 }

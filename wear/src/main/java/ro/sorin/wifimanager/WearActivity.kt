@@ -11,6 +11,7 @@ import ro.sorin.utils.*
 import ro.sorin.utils.entities.WearMessage
 import ro.sorin.utils.entities.WifiDetails
 import ro.sorin.utils.extensionfunctions.d
+import ro.sorin.utils.extensionfunctions.snack
 import ro.sorin.utils.extensionfunctions.toast
 import ro.sorin.wifimanager.adapter.WifiAdapter
 import rx.functions.Action1
@@ -45,6 +46,7 @@ class WearActivity : BaseWearActivity() {
         fab_get_wifi_networks.scanForWifiNetworks()
         rv_wifi_list.adapter = wifiAdapter
         startService(Intent(this, WearEventService::class.java))
+        snack(container_main_layout, "Service has been started").show()
     }
 
     fun FloatingActionButton.scanForWifiNetworks() {
