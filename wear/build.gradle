@@ -44,6 +44,9 @@ android {
     dexOptions {
         javaMaxHeapSize "2048M"
     }
+    lintOptions{
+        abortOnError false
+    }
 }
 kapt {
     generateStubs = true
@@ -80,6 +83,8 @@ dependencies {
     androidTestCompile 'commons-io:commons-io:2.4'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    testCompile 'junit:junit:4.12'
+
     //    Dependency injection similar to Dagger2
     //    compile 'com.github.stephanenicolas.toothpick:toothpick-runtime:+'
     //or 'com.github.stephanenicolas.toothpick:smoothie:x.y.z'
